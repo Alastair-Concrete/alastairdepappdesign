@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screech - Handheld Self-Defense Device | Alastair de Papp</title>
+    <link href="https://fonts.googleapis.com/css2?family=Satoshi:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --text-primary: #fafafa;
+            --text-secondary: #888888;
+            --accent: #e8ff47;
+            --accent-dim: rgba(232, 255, 71, 0.1);
+            --border: rgba(255, 255, 255, 0.08);
+            --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Satoshi', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Grain Overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            text-transform: uppercase;
+            font-family: 'Clash Display', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .logo:hover {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-secondary);
+            text-decoration: none;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: color 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.3s var(--transition-smooth);
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 4px;
+        }
+
+        /* Back Button */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+            margin-bottom: 2rem;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+        }
+
+        .back-link:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 4px;
+        }
+
+        .back-link svg {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s var(--transition-smooth);
+        }
+
+        .back-link:hover svg {
+            transform: translateX(-5px);
+        }
+
+        /* Project Header */
+        .project-header {
+            padding: 10rem 6rem 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .project-category {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .project-title {
+            font-family: 'Clash Display', sans-serif;
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .project-meta {
+            display: flex;
+            gap: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .meta-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-secondary);
+        }
+
+        .meta-value {
+            font-size: 1rem;
+            color: var(--text-primary);
+        }
+
+        /* Hero Image */
+        .project-hero {
+            width: 100%;
+            padding: 0 6rem;
+            margin-bottom: 6rem;
+        }
+
+        .project-hero img {
+            width: 100%;
+            max-height: 90vh;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            object-fit: contain;
+            filter: drop-shadow(0 40px 80px rgba(0, 0, 0, 0.55));
+        }
+
+        /* Project Content */
+        .project-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 6rem 6rem;
+        }
+
+        .project-description {
+            max-width: 800px;
+            margin-bottom: 4rem;
+        }
+
+        .project-description h2 {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-description p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        /* Image Gallery */
+        .project-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .gallery-image {
+            width: 85%;
+            align-self: center;
+            overflow: hidden;
+            background: var(--bg-secondary);
+        }
+
+        /* Every image after the lifestyle photo is 15% smaller again */
+        .gallery-image:not(:first-child) {
+            width: 72.25%;
+        }
+
+        .gallery-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.6s var(--transition-smooth);
+        }
+
+        .gallery-image:hover img {
+            transform: scale(1.02);
+        }
+
+        .gallery-video video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .gallery-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        /* Project Navigation */
+        .project-nav {
+            display: flex;
+            justify-content: space-between;
+            padding: 4rem 6rem;
+            border-top: 1px solid var(--border);
+            margin-top: 4rem;
+        }
+
+        .project-nav-link {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .project-nav-link:hover {
+            opacity: 0.7;
+        }
+
+        .project-nav-link:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 4px;
+        }
+
+        .project-nav-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-secondary);
+        }
+
+        .project-nav-title {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .project-nav-link.next {
+            text-align: right;
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 6rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-links a:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 4px;
+        }
+
+        /* Mobile Menu */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1001;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+        }
+
+        .menu-toggle span {
+            width: 24px;
+            height: 1px;
+            background: var(--text-primary);
+            transition: all 0.3s;
+        }
+
+        .menu-toggle:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 4px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .project-header,
+            .project-content,
+            .project-hero {
+                padding-left: 3rem;
+                padding-right: 3rem;
+            }
+
+            .project-nav {
+                padding: 3rem;
+            }
+
+            nav {
+                padding: 1.5rem 2rem;
+            }
+
+            footer {
+                padding: 2rem 3rem;
+            }
+
+            .gallery-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 100%;
+                height: 100vh;
+                background: var(--bg-primary);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                transition: right 0.5s var(--transition-smooth);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links a {
+                font-size: 1.5rem;
+            }
+
+            .project-header,
+            .project-content,
+            .project-hero {
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+
+            .project-header {
+                padding-top: 7rem;
+            }
+
+            .project-meta {
+                flex-wrap: wrap;
+                gap: 1.5rem;
+            }
+
+            .project-nav {
+                flex-direction: column;
+                gap: 2rem;
+                padding: 2rem 1.5rem;
+            }
+
+            .project-nav-link.next {
+                text-align: left;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.8s var(--transition-smooth) forwards;
+        }
+
+        .fade-in-delay-1 { animation-delay: 0.1s; }
+        .fade-in-delay-2 { animation-delay: 0.2s; }
+        .fade-in-delay-3 { animation-delay: 0.3s; }
+        .fade-in-delay-4 { animation-delay: 0.4s; }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Skip Link for Accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--accent);
+            color: var(--bg-primary);
+            padding: 8px 16px;
+            z-index: 10000;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Navigation -->
+    <nav role="navigation" aria-label="Main navigation">
+        <a href="index.html" class="logo">Alastair de Papp</a>
+        <ul class="nav-links">
+            <li><a href="index.html#work">Work</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="animations.html">Animations</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="index.html#about">About</a></li>
+        </ul>
+        <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <main id="main-content">
+        <!-- Project Header -->
+        <header class="project-header">
+            <a href="index.html#work" class="back-link fade-in">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+                </svg>
+                Back to Work
+            </a>
+            <h1 class="project-title fade-in fade-in-delay-2">Screech</h1>
+            <p class="project-subtitle fade-in fade-in-delay-3">Handheld Self-Defense Device</p>
+            <div class="project-meta fade-in fade-in-delay-4">
+                <div class="meta-item">
+                    <span class="meta-label">Role</span>
+                    <span class="meta-value">Industrial Designer</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Focus</span>
+                    <span class="meta-value">Personal Safety</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Skills</span>
+                    <span class="meta-value">Surface Modeling, SolidWorks, Keyshot Rendering</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero Image -->
+        <section class="project-hero" aria-label="Project hero image">
+            <img src="assets/screech/screech-cta.png" alt="Screech handheld self-defense device with locking carabiner">
+        </section>
+
+        <!-- Overview -->
+        <section class="project-content" style="padding-bottom: 0;">
+            <div class="project-description">
+                <h2>Overview</h2>
+                <p>Screech is a palm-sized personal-safety alarm. A high-output piezo array behind the green-ringed ports emits a piercing screech to deter a threat and draw attention, while a locking carabiner and braided leash keep it clipped to a pack, belt loop, or bag — always within reach on the trail or the walk home.</p>
+            </div>
+        </section>
+
+        <!-- Gallery -->
+        <section class="project-content">
+            <div class="project-gallery" role="region" aria-label="Project images">
+                <figure class="gallery-image">
+                    <img src="assets/screech/screech-hero.jpg" alt="Screech clipped to a hiker's pack in the field" loading="lazy">
+                </figure>
+                <figure class="gallery-image">
+                    <img src="assets/screech/screech-g1.jpg" alt="Screech back plate with control markings and locking carabiner" loading="lazy">
+                </figure>
+                <figure class="gallery-image">
+                    <img src="assets/screech/screech-g2.jpg" alt="Screech side profile with braided leash and carabiner" loading="lazy">
+                </figure>
+                <figure class="gallery-image">
+                    <img src="assets/screech/screech-g3.jpg" alt="Screech exploded view showing the piezo driver, PCB, and housing" loading="lazy">
+                </figure>
+                <figure class="gallery-image">
+                    <img src="assets/screech/screech-g4.jpg" alt="Screech three-quarter view showing the speaker grille and piezo ports" loading="lazy">
+                </figure>
+                <figure class="gallery-image">
+                    <img src="assets/screech/screech-g5.jpg?v=2" alt="Screech clipped to a belt loop while walking through the city" loading="lazy">
+                </figure>
+                <figure class="gallery-image">
+                    <img src="assets/screech/screech-g6.jpg" alt="Screech held in hand deterring a threat in a rain-soaked alley" loading="lazy">
+                </figure>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p class="footer-text">© 2024 Alastair de Papp. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="https://www.linkedin.com/in/alastair-de-papp-a00a331a1/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="index.html#work">Portfolio</a>
+            <a href="index.html#contact">Contact</a>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                menuToggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        // Close menu on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                menuToggle.setAttribute('aria-expanded', 'false');
+                menuToggle.focus();
+            }
+        });
+    </script>
+</body>
+</html>
