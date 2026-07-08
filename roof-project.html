@@ -219,7 +219,8 @@
         }
 
         .project-hero img {
-            width: 100%;
+            width: 125%;
+            margin-left: -12.5%;
             height: auto;
             display: block;
         }
@@ -272,6 +273,13 @@
 
         .gallery-image:hover img {
             transform: scale(1.02);
+        }
+
+        /* Feature images shown 20% larger than the standard column width */
+        .gallery-image.wider {
+            width: 120%;
+            margin-left: -10%;
+            align-self: center;
         }
 
         .gallery-row {
@@ -569,8 +577,11 @@
             </div>
 
             <div class="project-gallery" role="region" aria-label="Project images">
-                <figure class="gallery-image">
+                <figure class="gallery-image wider">
                     <img src="assets/roof/roof-open-rear.jpg?v=2" alt="SABEK Vehicle Roof Storage - rear three-quarter with cargo pod open" loading="lazy">
+                </figure>
+                <figure class="gallery-image wider">
+                    <img src="assets/roof/roof-cta-gallery.jpg" alt="SABEK Vehicle Roof Storage - front three-quarter with cargo pod closed" loading="lazy">
                 </figure>
                 <figure class="gallery-image">
                     <img src="assets/roof/roof-03.jpg" alt="SABEK Vehicle Roof Storage - concept ideation" loading="lazy">

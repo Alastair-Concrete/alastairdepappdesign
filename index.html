@@ -453,7 +453,9 @@
 
         @media (max-width: 768px) {
             .project-hero-caption { left: 1.5rem; bottom: 2rem; }
-            .project-hero-media img { max-width: 92%; }
+            .project-hero-media img,
+            .project-hero:nth-of-type(3) .project-hero-media img,
+            .project-hero:nth-of-type(4) .project-hero-media img { max-width: 92%; }
             .project-hero-index { font-size: 48vw; }
         }
 
@@ -676,42 +678,63 @@
         }
 
         @media (max-width: 768px) {
+            /* Hamburger: always visible, fixed at top-left */
+            nav.fixed-nav { opacity: 1; }
+            nav.fixed-nav .logo { display: none; }
+
             .menu-toggle {
                 display: flex;
+                position: fixed;
+                top: 1.6rem;
+                left: 1.5rem;
+                z-index: 1002;
+                pointer-events: auto;
             }
 
+            /* Nav links become a dropdown panel under the hamburger */
             .nav-links {
                 position: fixed;
-                top: 0;
-                right: -100%;
-                width: 100%;
-                height: 100vh;
-                background: var(--bg-primary);
+                top: 4.6rem;
+                left: 1.5rem;
+                right: auto;
+                width: auto;
+                height: auto;
                 flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                gap: 2rem;
-                transition: right 0.5s var(--transition-smooth);
+                align-items: flex-start;
+                gap: 1.1rem;
+                background: rgba(10, 10, 10, 0.98);
+                backdrop-filter: blur(20px);
+                border: 1px solid var(--border);
+                border-radius: 12px;
+                padding: 1.4rem 2rem;
+                opacity: 0;
+                transform: translateY(-8px);
+                transform-origin: top left;
+                pointer-events: none;
+                transition: opacity 0.28s var(--transition-smooth), transform 0.28s var(--transition-smooth);
+                z-index: 1001;
             }
 
             .nav-links.active {
-                right: 0;
+                opacity: 1;
+                transform: translateY(0);
+                pointer-events: auto;
             }
 
             .nav-links a {
-                font-size: 1.5rem;
+                font-size: 1.05rem;
             }
 
+            /* Nav lives in the hamburger now — hide the inline hero nav */
+            .hero-nav { display: none; }
+
             .hero {
-                padding: 6rem 2rem 3rem;
+                padding: 3.5rem 2rem 2.5rem;
             }
 
             .hero-name {
                 font-size: 1.3rem;
-            }
-
-            .hero-nav {
-                gap: 2rem;
+                margin-bottom: 1rem;
             }
 
             .projects-section {

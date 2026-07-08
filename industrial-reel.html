@@ -219,7 +219,7 @@
         }
 
         .project-hero img {
-            width: 50%;
+            width: 62.5%;
             height: auto;
             display: block;
             margin: 0 auto;
@@ -273,6 +273,13 @@
 
         .gallery-image:hover img {
             transform: scale(1.02);
+        }
+
+        /* Feature images shown 15% larger than the standard column width */
+        .gallery-image.wider {
+            width: 115%;
+            margin-left: -7.5%;
+            align-self: center;
         }
 
         .gallery-row {
@@ -565,17 +572,17 @@
         <section class="project-content">
             <div class="project-description">
                 <h2>Overview</h2>
-                <p>For this project, I worked with a consumer electronics manufacturer to create two extension cord reels. One model is designed to fit within an office or home setting, while the other was made for a construction site.</p>
+                <p>For this project, I worked with a consumer electronics manufacturer to create an extension cord reel. The model was designed for a construction site — built to be rugged and easy to handle in a demanding job-site environment.</p>
             </div>
 
             <div class="project-gallery" role="region" aria-label="Project images">
-                <figure class="gallery-image">
+                <figure class="gallery-image wider">
                     <img src="assets/reel/reel-new-01.jpg?v=5" alt="Extension Cord Reel - product render, three-quarter view" loading="lazy">
                 </figure>
                 <figure class="gallery-image">
                     <img src="assets/reel/reel-new-02.jpg?v=4" alt="Extension Cord Reel - detail of handle and housing" loading="lazy">
                 </figure>
-                <figure class="gallery-image">
+                <figure class="gallery-image wider">
                     <img src="assets/reel/reel-new-03.jpg?v=3" alt="Extension Cord Reel - side profile view" loading="lazy">
                 </figure>
                 <figure class="gallery-image">
