@@ -729,12 +729,17 @@
             .hero-nav { display: none; }
 
             .hero {
-                padding: 3.5rem 2rem 2.5rem;
+                padding: 3rem 2rem 1.25rem;
             }
 
             .hero-name {
                 font-size: 1.3rem;
                 margin-bottom: 1rem;
+            }
+
+            /* Shorten the first project so its CTA sits above the fold */
+            .project-hero:first-of-type {
+                min-height: 66vh;
             }
 
             .projects-section {
