@@ -737,9 +737,27 @@
                 margin-bottom: 1rem;
             }
 
-            /* Shorten the first project so its CTA sits above the fold */
+            /* First project: image + caption as one centered group, so the CTA
+               sits above the fold with even spacing (not pinned to the bottom) */
             .project-hero:first-of-type {
-                min-height: 66vh;
+                min-height: 62vh;
+                flex-direction: column;
+                justify-content: center;
+                gap: 1.75rem;
+            }
+            .project-hero:first-of-type .project-hero-caption {
+                position: static;
+                left: auto;
+                bottom: auto;
+                align-self: flex-start;
+                padding: 0 0.5rem;
+                max-width: 100%;
+            }
+            .project-hero:first-of-type .project-hero-subtitle {
+                margin-top: 0.4rem;
+            }
+            .project-hero:first-of-type .project-hero-cta {
+                margin-top: 1.5rem;
             }
 
             .projects-section {
